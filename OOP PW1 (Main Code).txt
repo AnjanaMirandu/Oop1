@@ -1,0 +1,69 @@
+OOP Practical Work 01
+
+Main Program code
+
+
+<?php
+
+function calculate_3x_plus_1($x) {
+    $count = 0;
+    while ($x != 1) {
+        if ($x % 2 == 0) {
+            $x /= 2;
+        } else {
+            $x = 3 * $x + 1;
+        }
+        $count++;
+    }
+    return $count;
+}
+
+function calculate_max_and_min_values($start, $end) {
+    $max_value = 0;
+    $min_value = PHP_INT_MAX;
+    $max_numbers = [];
+    $min_numbers = [];
+    $total_iterations = 0;
+
+    for ($i = $start; $i <= $end; $i++) {
+        $current_iterations = calculate_3x_plus_1($i);
+        $total_iterations += $current_iterations;
+
+        if ($current_iterations > $max_value) {
+            $max_value = $current_iterations;
+            $max_numbers = [$i];
+        } elseif ($current_iterations == $max_value) {
+            $max_numbers[] = $i;
+        }
+
+        if ($current_iterations < $min_value) {
+            $min_value = $current_iterations;
+            $min_numbers = [$i];
+        } elseif ($current_iterations == $min_value) {
+            $min_numbers[] = $i;
+        }
+    }
+
+    return [
+        'max_value' => $max_value,
+        'max_numbers' => $max_numbers,
+        'min_value' => $min_value,
+        'min_numbers' => $min_numbers,
+        'total_iterations' => $total_iterations
+    ];
+}
+
+// Prompt user for range values
+$start_range = (int)readline("Enter the start of the range: ");
+$end_range = (int)readline("Enter the end of the range: ");
+
+// Find max and min values and numbers with max and min iterations for range
+echo "\nFinding max and min values and numbers with max and min iterations for range $start_range to $end_range\n";
+$result = calculate_max_and_min_values($start_range, $end_range);
+echo "Max value: " . $result['max_value'] . "\n";
+echo "Numbers achieving max value: " . implode(", ", $result['max_numbers']) . "\n";
+echo "Min value: " . $result['min_value'] . "\n";
+echo "Numbers achieving min value: " . implode(", ", $result['min_numbers']) . "\n";
+echo "Total iterations: " . $result['total_iterations'] . "\n";
+?>
+
